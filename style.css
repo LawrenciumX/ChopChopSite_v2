@@ -1007,8 +1007,6 @@
 
   @media (max-width: 768px) {
     .hero-scroll-hint {
-      position: static;
-      margin-top: 32px;
-      padding-left: 20px;
+      display: none;
     }
   }
