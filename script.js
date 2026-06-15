@@ -238,8 +238,22 @@
       const featuredVideo = document.querySelector('.featured-video');
       if (featuredVideo) {
         featuredVideo.style.cursor = 'pointer';
-        featuredVideo.addEventListener('click', () => {
+        /*featuredVideo.addEventListener('click', () => {
           window.open(`https://www.youtube.com/watch?v=${vid}`, '_blank');
+      });*/
+
+        featuredVideo.addEventListener('click', () => {
+          featuredVideo.innerHTML = `
+    <iframe
+      width="100%"
+      height="100%"
+      src="https://www.youtube.com/embed/${vid}?autoplay=1"
+      title="${snippet.title}"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+  `;
       });
       }
 
