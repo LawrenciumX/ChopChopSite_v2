@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ChopChop Shop — Cookbooks, kitchenware, pantry staples and apparel curated by our team.">
+<title>Shop — Chop Chop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">Chop <span>Chop</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#videos">Episodes</a></li>
+    <li><a href="index.html#categories">Cuisines</a></li>
+    <li><a href="index.html#about">Featured</a></li>
+    <li><a href="index.html#founders">Team</a></li>
+    <li><a href="shop.html" style="color:var(--gold)">Shop</a></li>
+    <li><a href="article.html">Stories</a></li>
+  </ul>
+  <a href="https://www.youtube.com/@ChopChopFoodChannel/playlists" class="nav-cta" target="_blank">Watch on YouTube</a>
+</nav>
+
+<!-- HERO -->
+<header class="page-hero">
+  <div>
+    <p class="page-eyebrow">The ChopChop Collection</p>
+    <h1 class="page-title">Shop the<br><em>Craft</em></h1>
+  </div>
+  <p class="page-desc">Cookbooks, heirloom kitchenware, single-origin pantry staples, and apparel made for people who take food seriously.</p>
+</header>
+
+<!-- SHOP BODY -->
+<main class="shop-body" id="shop-top">
+
+  <!-- Toolbar -->
+  <div class="shop-toolbar">
+    <div class="shop-filters" id="shop-filters">
+      <button class="filter-pill active" data-cat="all">All</button>
+      <button class="filter-pill" data-cat="cookbooks">Cookbooks</button>
+      <button class="filter-pill" data-cat="kitchenware">Kitchenware</button>
+      <button class="filter-pill" data-cat="pantry">Pantry</button>
+      <button class="filter-pill" data-cat="apparel">Apparel</button>
+    </div>
+    <div class="shop-count" id="shop-count"></div>
+  </div>
+
+  <!-- Product grid -->
+  <div class="product-grid" id="product-grid"></div>
+
+  <!-- Pagination -->
+  <div class="pagination" id="pagination"></div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="logo">Chop <span>Chop</span></a>
+      <p>A culinary channel celebrating the art of food, the craft of cooking, and the cultures that give it meaning.</p>
+      <div class="social-links">
+        <a href="https://www.youtube.com/@ChopChopFoodChannel" class="social-link" aria-label="YouTube" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+        <a href="https://instagram.com/chopchopfoodchannel" class="social-link" aria-label="Instagram" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://tiktok.com/@chopchopfoodchannel" class="social-link" aria-label="TikTok" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.facebook.com/chopchopfoodchannel" class="social-link" aria-label="Facebook" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Explore</div>
+      <ul class="footer-links">
+        <li><a href="https://www.youtube.com/@ChopChopFoodChannel/videos" target="_blank">All Episodes</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="article.html">Chefs &amp; Stories</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2026 ChopChop. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  /* ── Shared: cursor + nav + reveal ─────────────────── */
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => {
+    mx=e.clientX; my=e.clientY;
+    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
+  });
+  (function tick(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(tick); })();
+
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll',()=> navbar.classList.toggle('scrolled',scrollY>80));
+
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }});
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* ── Cursor hover targets ───────────────────────────── */
+  function attachCursorHover(){
+    document.querySelectorAll('a,button,.product-card').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{ cursor.style.transform='translate(-50%,-50%) scale(2)'; ring.style.opacity='0.4'; });
+      el.addEventListener('mouseleave',()=>{ cursor.style.transform='translate(-50%,-50%) scale(1)'; ring.style.opacity='1'; });
+    });
+  }
+
+  /* ── Product data ───────────────────────────────────── */
+  const PRODUCTS = [
+    { id:1, name:'ChopChop: The Cookbook', cat:'cookbooks', price:48, badge:'New',
+      img:'https://images.unsplash.com/photo-1512149673953-1e251807ec7c?w=600&q=80',
+      sub:'Our debut cookbook — 120 recipes from 12 countries.' },
+    { id:2, name:'Tsukiji Tides', cat:'cookbooks', price:36,
+      img:'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&q=80',
+      sub:'A sushi journal from Tokyo\'s oldest fish market.' },
+    { id:3, name:'Spice Routes: Marrakech', cat:'cookbooks', price:42,
+      img:'https://images.unsplash.com/photo-1481349518771-20055b2a7b24?w=600&q=80',
+      sub:'North African flavour through 80 recipes.' },
+    { id:4, name:'The Slow Table', cat:'cookbooks', price:52, badge:'Bestseller',
+      img:'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=600&q=80',
+      sub:'Stories and recipes for unhurried cooking.' },
+    { id:5, name:'Lyon Winter: A Bouchon Journal', cat:'cookbooks', price:38,
+      img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',
+      sub:'Bistro classics from the world\'s gastronomic capital.' },
+    { id:6, name:'Carbon Steel Chef\'s Knife', cat:'kitchenware', price:128,
+      img:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80',
+      sub:'Hand-forged. 8″ blade. Lifetime guarantee.' },
+    { id:7, name:'Enamel Stock Pot — 6 L', cat:'kitchenware', price:96,
+      img:'https://images.unsplash.com/photo-1585515320310-259814833e62?w=600&q=80',
+      sub:'Dutch oven-inspired. Matte black exterior.' },
+    { id:8, name:'Ceramic Bowl Set (4)', cat:'kitchenware', price:74, badge:'New',
+      img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&q=80',
+      sub:'Hand-thrown stoneware, earthy glaze finish.' },
+    { id:9, name:'Cast Iron Tasting Skillet', cat:'kitchenware', price:58,
+      img:'https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=600&q=80',
+      sub:'Small-format, big heat retention.' },
+    { id:10, name:'Sicilian Olive Oil 500 ml', cat:'pantry', price:28, badge:'Bestseller',
+      img:'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600&q=80',
+      sub:'First cold press. Single estate, Agrigento.' },
+    { id:11, name:'Marrakech Spice Tin Set', cat:'pantry', price:34,
+      img:'https://images.unsplash.com/photo-1532336414038-cf19250c5757?w=600&q=80',
+      sub:'Ras el hanout, harissa, preserved lemon peel & more.' },
+    { id:12, name:'Single-Origin Soy — Tsukiji', cat:'pantry', price:22,
+      img:'https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80',
+      sub:'Aged 18 months. Small-batch, Chiba prefecture.' },
+    { id:13, name:'Field Tote — Canvas & Leather', cat:'apparel', price:58, badge:'Bestseller',
+      img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80',
+      sub:'Market-ready. Reinforced base. Brass fittings.' },
+    { id:14, name:'Studio Cap — Embroidered', cat:'apparel', price:32,
+      img:'https://images.unsplash.com/photo-1521369909029-2afed882baee?w=600&q=80',
+      sub:'100% organic cotton. Tonal ChopChop stitch.' },
+  ];
+
+  const PER_PAGE = 6;
+  let state = { cat: 'all', page: 1 };
+
+  function filtered(){ return state.cat==='all' ? PRODUCTS : PRODUCTS.filter(p=>p.cat===state.cat); }
+
+  function render(){
+    const list      = filtered();
+    const total     = list.length;
+    const pages     = Math.max(1, Math.ceil(total/PER_PAGE));
+    state.page      = Math.min(state.page, pages);
+    const slice     = list.slice((state.page-1)*PER_PAGE, state.page*PER_PAGE);
+    const grid      = document.getElementById('product-grid');
+    const countEl   = document.getElementById('shop-count');
+    const pagEl     = document.getElementById('pagination');
+
+    countEl.innerHTML = `<strong>${total}</strong> Item${total!==1?'s':''}`;
+
+    grid.innerHTML = '';
+    if(!slice.length){
+      grid.innerHTML='<div class="grid-empty"><p>Nothing here yet — check back soon.</p></div>';
+    } else {
+      slice.forEach((p,i)=>{
+        const card = document.createElement('div');
+        card.className='product-card reveal';
+        card.style.transitionDelay=`${i*0.07}s`;
+        card.innerHTML=`
+          <div class="product-thumb">
+            <img src="${p.img}" alt="${p.name}" loading="lazy">
+            <div class="product-cat">${catLabel(p.cat)}</div>
+            ${p.badge?`<div class="product-badge">${p.badge}</div>`:''}
+          </div>
+          <div class="product-info">
+            <div>
+              <div class="product-name">${p.name}</div>
+              <div class="product-sub">${p.sub}</div>
+            </div>
+            <div class="product-price">$${p.price.toFixed(2)}</div>
+          </div>`;
+        grid.appendChild(card);
+        io.observe(card);
+      });
+    }
+
+    /* pagination */
+    pagEl.innerHTML='';
+    if(pages<=1) return;
+    pagEl.appendChild(arrowBtn('←', state.page===1, ()=>jump(state.page-1)));
+    /* show max 5 page numbers with ellipsis */
+    const nums = pageNums(state.page, pages);
+    nums.forEach(n=>{
+      if(n==='…'){ const d=document.createElement('span'); d.className='pag-dots'; d.textContent='…'; pagEl.appendChild(d); }
+      else {
+        const b=document.createElement('button');
+        b.className='pag-btn'+(n===state.page?' active':'');
+        b.textContent=n; b.setAttribute('aria-label',`Page ${n}`);
+        if(n===state.page) b.setAttribute('aria-current','page');
+        b.addEventListener('click',()=>jump(n));
+        pagEl.appendChild(b);
+      }
+    });
+    pagEl.appendChild(arrowBtn('→', state.page===pages, ()=>jump(state.page+1)));
+    attachCursorHover();
+  }
+
+  function catLabel(c){ return {cookbooks:'Cookbooks',kitchenware:'Kitchenware',pantry:'Pantry',apparel:'Apparel'}[c]||c; }
+
+  function arrowBtn(txt, disabled, fn){
+    const b=document.createElement('button');
+    b.className='pag-btn'; b.textContent=txt; b.disabled=disabled;
+    b.setAttribute('aria-label', txt==='←'?'Previous page':'Next page');
+    b.addEventListener('click',fn); return b;
+  }
+
+  function pageNums(cur, total){
+    if(total<=7) return Array.from({length:total},(_,i)=>i+1);
+    if(cur<=4)   return [1,2,3,4,5,'…',total];
+    if(cur>=total-3) return [1,'…',total-4,total-3,total-2,total-1,total];
+    return [1,'…',cur-1,cur,cur+1,'…',total];
+  }
+
+  function jump(p){
+    state.page=p; render();
+    document.getElementById('shop-top').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+  document.getElementById('shop-filters').addEventListener('click',e=>{
+    const pill=e.target.closest('.filter-pill'); if(!pill) return;
+    document.querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('active'));
+    pill.classList.add('active');
+    state.cat=pill.dataset.cat; state.page=1; render();
+  });
+
+  render();
+  attachCursorHover();
+</script>
+</body>
+</html>
