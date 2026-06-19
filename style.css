@@ -22,7 +22,7 @@
     --sans: 'Jost', sans-serif;
   }
 
-  html { scroll-behavior: smooth;scroll-padding-top: -120px;}
+  html { scroll-behavior: smooth;}
 
   body {
     background: var(--black);
