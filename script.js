@@ -76,6 +76,25 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 });
 });
 
+/* ===== Mobile nav toggle ===== */
+const navToggle = document.querySelector('.nav-toggle');
+const navLinksList = document.getElementById('navLinks');
+if (navToggle && navLinksList) {
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinksList.classList.toggle('open');
+  navToggle.classList.toggle('open', isOpen);
+  navToggle.setAttribute('aria-expanded', isOpen);
+});
+  navLinksList.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+    navLinksList.classList.remove('open');
+  navToggle.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+});
+});
+}
+
+
 
 
   // ─── YouTube API Integration ───────────────────────────────────────────

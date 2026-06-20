@@ -115,6 +115,27 @@
   }
   .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
 
+/* Mobile hamburger toggle — hidden on desktop */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  z-index: 101;
+}
+.nav-toggle span {
+  width: 22px;
+  height: 1px;
+  background: var(--off-white);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.nav-toggle.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
   /* HERO */
   .hero {
     height: 100vh;
@@ -866,6 +887,30 @@
 
     .nav-links {
       display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      flex-direction: column;
+      gap: 0;
+      background: rgba(12, 12, 10, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .nav-links.open {
+      display: flex;
+    }
+    .nav-links li {
+      width: 100%;
+    }
+    .nav-links a {
+      display: block;
+      padding: 16px 22px;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .nav-toggle {
+      display: flex;
     }
 
     .nav-cta {
