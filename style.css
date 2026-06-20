@@ -336,7 +336,7 @@
   }
 
   /* SECTION COMMON */
-  section { padding: 120px 80px;}
+  section { padding: 120px 80px; scroll-margin-top: -70px;}
   .section-eyebrow {
     font-size: 10px;
     letter-spacing: 0.35em;
