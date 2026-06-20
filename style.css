@@ -913,10 +913,15 @@
       display: flex;
     }
 
-    .nav-cta {
+    /*.nav-cta {
       padding: 9px 14px;
       font-size: 9px;
+    }*/
+
+    .nav-cta {
+      display: none;
     }
+
 
     .hero-left {
       padding: 120px 24px 70px;
